@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://c3axxwhg6uvvf"]
+
+[ext_resource type="Script" path="res://src/Scripts/CarController.gd" id="1_hsswd"]
+[ext_resource type="Texture2D" uid="uid://0x15763pv3vh" path="res://Assets/Sprites/Image/Cars/red_car1.png" id="2_aexiu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yuxrw"]
+size = Vector2(147, 648)
+
+[node name="RigidBody2D" type="RigidBody2D"]
+script = ExtResource("1_hsswd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_aexiu")
+
+[node name="FrontScanner" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FrontScanner"]
+position = Vector2(-7.5, -414)
+shape = SubResource("RectangleShape2D_yuxrw")

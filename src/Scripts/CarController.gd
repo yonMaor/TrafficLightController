@@ -22,6 +22,8 @@ func should_break():
 	var scanner = get_node("FrontScanner")
 	
 	
+	
+	
 func update_acceleration_input():
 	
 	if should_break:
