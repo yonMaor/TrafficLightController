@@ -1,11 +1,12 @@
 extends CharacterBody2D
 
 @onready var front_scanner = $FrontScanner
+@onready var car_collision_shape = $CarCollisionShape
 
 const SPEED: float = 40.0
 const MAX_SPEED: float = 100
 const INITIAL_DIR: Vector2 = Vector2(1, 0)
-const ACCEL_BASE_FACTOR: float = 5.0
+const ACCEL_BASE_FACTOR: float = 0.25
 
 var body_in_front_scanner: bool = false
 var bodies_in_range: Array = []
@@ -27,20 +28,38 @@ func calc_acceleration_type() -> int:
 		return 1
 
 
-func get_front_scanner_length() -> float:
-	var front_scanner_shape = front_scanner.get_node("CollisionShape2D").get_shape().size
-	return max(front_scanner_shape[0], front_scanner_shape[1])
+func get_collision_shape_shape(collision_shape):
+	return collision_shape.get_shape().size
+
+
+func get_collision_shape_short_side(collision_shape: CollisionShape2D) -> float:
+	var shape = get_collision_shape_shape(collision_shape)
+	print(max(shape[0], shape[1]))
+	return min(shape[0], shape[1])
+
+
+func get_collision_shape_long_side(collision_shape) -> float:
+	var shape = get_collision_shape_shape(collision_shape)
+	print(max(shape[0], shape[1]))
+	return max(shape[0], shape[1])
+
+func get_front_scanner_length(front_scanner):
+	var front_scanner_collision_shape = front_scanner.get_node("CollisionShape2D")
+	return get_collision_shape_long_side(front_scanner_collision_shape)
 
 
 func get_closest_body_and_range() -> Dictionary:
 	var min_dist_body = null
-	var min_dist = get_front_scanner_length()
+	var min_dist = get_front_scanner_length(front_scanner)
 	if not bodies_in_range:
 		return {}
 	for body in bodies_in_range:
 		var body_collision_shape = body.get_node("CollisionShape2D") #TODO: Should check if this returns anything
 		var body_length = max(body_collision_shape.shape.size[0], body_collision_shape.shape.size[1])
-		var dist = (body.position - position).length()
+		var car_length = get_collision_shape_long_side(car_collision_shape)
+		# TODO: Fix to consider angle between the bodies
+		var dist = (body.position - position).length() - body_length/2 - car_length/2
+		print(dist)
 		if dist < min_dist:
 			min_dist = dist
 			min_dist_body = body
@@ -53,8 +72,8 @@ func calc_acceleration(min_dist_dict) -> float:
 	if min_dist_dict == {}:
 		return acceleration_ratio
 	else:
-		var front_scanner_length = get_front_scanner_length()
-		acceleration_ratio = 1 - min_dist_dict["min_dist"] / (0.5 * front_scanner_length)
+		var front_scanner_length = get_front_scanner_length(front_scanner)
+		acceleration_ratio = 1 - min_dist_dict["min_dist"] / (front_scanner_length)
 	return acceleration_ratio
 
 
@@ -65,7 +84,7 @@ func _process(delta) -> void:
 	var acceleration_ratio = calc_acceleration(min_dist_dict)
 	#print("acceleration_ratio=" + str(acceleration_ratio))
 	var acceleration = acceleration_ratio * ACCEL_BASE_FACTOR * acceleration_dir
-	print(acceleration)
+	#print(acceleration)
 	velocity = Vector2(1, 0).rotated(rotation) * min (velocity.length() + acceleration, MAX_SPEED)
 	#print(velocity)
 	move_and_slide()

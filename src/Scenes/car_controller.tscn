@@ -7,17 +7,17 @@
 size = Vector2(90, 176)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yuxrw"]
-size = Vector2(107, 649.002)
+size = Vector2(100, 600)
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 position = Vector2(86, 340)
 script = ExtResource("1_hsswd")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="CarSprite" type="Sprite2D" parent="."]
 rotation = 1.5708
 texture = ExtResource("2_aexiu")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CarCollisionShape" type="CollisionShape2D" parent="."]
 position = Vector2(-2.99878, -4.99951)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_jb54g")
@@ -26,9 +26,10 @@ shape = SubResource("RectangleShape2D_jb54g")
 position = Vector2(0.000244141, -1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FrontScanner"]
-position = Vector2(410.501, -4.49881)
+position = Vector2(386, -4)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_yuxrw")
+one_way_collision_margin = 0.0
 
 [connection signal="body_entered" from="FrontScanner" to="." method="_on_front_scanner_body_entered"]
 [connection signal="body_exited" from="FrontScanner" to="." method="_on_front_scanner_body_exited"]
