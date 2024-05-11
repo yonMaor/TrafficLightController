@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://crmkmpsuyxhpp"]
+
+[ext_resource type="Texture2D" uid="uid://ciilsmewpqbw8" path="res://Assets/Sprites/Image/TrafficLight/TrafficLight.png" id="1_qyhbe"]
+[ext_resource type="Script" path="res://src/Scenes/traffic_light/traffic_light.gd" id="1_spm68"]
+[ext_resource type="Texture2D" uid="uid://b5q8frvtwq0h2" path="res://Assets/Sprites/Image/TrafficLight/TrafficLight_Outline.png" id="3_38qei"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8m3js"]
+size = Vector2(40, 330)
+
+[node name="TrafficLight" type="Area2D"]
+position = Vector2(510, 326)
+script = ExtResource("1_spm68")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_qyhbe")
+
+[node name="Light" type="Sprite2D" parent="."]
+
+[node name="Outline" type="Sprite2D" parent="."]
+texture = ExtResource("3_38qei")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-10, -7)
+shape = SubResource("RectangleShape2D_8m3js")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

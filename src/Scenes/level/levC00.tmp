@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://cp532wpes3h6"]
+
+[ext_resource type="PackedScene" uid="uid://c3axxwhg6uvvf" path="res://src/Scenes/car_controller.tscn" id="1_2w6up"]
+[ext_resource type="Texture2D" uid="uid://cst6hmd42lbsq" path="res://icon.svg" id="2_1p2kj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0prmf"]
+size = Vector2(131, 130)
+
+[node name="Level" type="Node2D"]
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("1_2w6up")]
+
+[node name="CharacterBody2D2" type="CharacterBody2D" parent="."]
+position = Vector2(1081, 332)
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D2"]
+texture = ExtResource("2_1p2kj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D2"]
+position = Vector2(3, -1)
+shape = SubResource("RectangleShape2D_0prmf")
+
+[node name="CharacterBody2D2" type="CharacterBody2D" parent="CharacterBody2D2"]
+position = Vector2(-169, -182)
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D2/CharacterBody2D2"]
+texture = ExtResource("2_1p2kj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D2/CharacterBody2D2"]
+position = Vector2(3, -1)
+shape = SubResource("RectangleShape2D_0prmf")
