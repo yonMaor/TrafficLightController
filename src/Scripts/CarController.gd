@@ -17,15 +17,15 @@ func _ready():
 	pass # Replace with function body.
 
 
-func calc_acceleration_type() -> int:
+func calc_acceleration_dir() -> int:
 	# Returns 1 when accelerating, -1 when braking, and 0 when stopped
 	# TODO: Decision needs to also be based on the change in the closest object dist
 	if body_in_front_scanner:
 		if velocity.length() < 1:
-			return 0
-		return -1
+			return Enums.ACCEL_DIR.STOP
+		return Enums.ACCEL_DIR.BACKWARD
 	else:
-		return 1
+		return Enums.ACCEL_DIR.FORWARD
 
 
 func get_collision_shape_shape(collision_shape):
@@ -43,16 +43,18 @@ func get_collision_shape_long_side(collision_shape) -> float:
 	print(max(shape[0], shape[1]))
 	return max(shape[0], shape[1])
 
+
 func get_front_scanner_length(front_scanner):
 	var front_scanner_collision_shape = front_scanner.get_node("CollisionShape2D")
 	return get_collision_shape_long_side(front_scanner_collision_shape)
 
 
+# TODO: Refactor this mess of a function
+# TODO: Consider moving this to the front scanner node
 func get_closest_body_and_range() -> Dictionary:
 	var min_dist_body = null
 	var min_dist = get_front_scanner_length(front_scanner)
-	if not bodies_in_range:
-		return {}
+	
 	for body in bodies_in_range:
 		var body_collision_shape = body.get_node("CollisionShape2D") #TODO: Should check if this returns anything
 		var body_length = max(body_collision_shape.shape.size[0], body_collision_shape.shape.size[1])
@@ -64,37 +66,38 @@ func get_closest_body_and_range() -> Dictionary:
 			min_dist = dist
 			min_dist_body = body
 			
-	return {"min_dist": min_dist, "body": min_dist_body}
+	return {Consts.MIN_DIST: min_dist, Consts.MIN_DIST_BODY: min_dist_body}
 
 
-func calc_acceleration(min_dist_dict) -> float:
+func calc_acceleration_ratio(min_dist_dict) -> float:
 	var acceleration_ratio = 1.0
-	if min_dist_dict == {}:
+	if min_dist_dict[Consts.MIN_DIST_BODY] == null:
 		return acceleration_ratio
 	else:
 		var front_scanner_length = get_front_scanner_length(front_scanner)
-		acceleration_ratio = 1 - min_dist_dict["min_dist"] / (front_scanner_length)
+		acceleration_ratio = 1 - min_dist_dict[Consts.MIN_DIST] / (front_scanner_length)
 	return acceleration_ratio
 
 
+func calc_acceleration():
+	var acceleration_dir = calc_acceleration_dir()
+	var min_dist_body = get_closest_body_and_range()
+	var acceleration_ratio = calc_acceleration_ratio(min_dist_body)
+	return acceleration_ratio * ACCEL_BASE_FACTOR * acceleration_dir
+
+
 func _process(delta) -> void:
-	var acceleration_dir = calc_acceleration_type()
-	#print("acceleration_dir=" + str(acceleration_dir))
-	var min_dist_dict = get_closest_body_and_range()
-	var acceleration_ratio = calc_acceleration(min_dist_dict)
-	#print("acceleration_ratio=" + str(acceleration_ratio))
-	var acceleration = acceleration_ratio * ACCEL_BASE_FACTOR * acceleration_dir
-	#print(acceleration)
+	var acceleration = calc_acceleration()
 	velocity = Vector2(1, 0).rotated(rotation) * min (velocity.length() + acceleration, MAX_SPEED)
-	#print(velocity)
 	move_and_slide()
 
 
 func _on_front_scanner_body_entered(body):
 	# TODO: Need to check type of object
-	# TODO: For traffic light, check if green or red
-	body_in_front_scanner = true
-	bodies_in_range.append(body)
+	# TODO: For traffic light, need to check if green or red
+	if body.is_in_group(GroupNames.CAR_GROUP):
+		body_in_front_scanner = true
+		bodies_in_range.append(body)
 
 
 func _on_front_scanner_body_exited(body):

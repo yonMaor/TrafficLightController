@@ -14,6 +14,12 @@ config/name="Traffic Light Controller"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+GroupNames="*res://src/CONSTS/GroupNames.gd"
+Enums="*res://src/CONSTS/Enums.gd"
+Consts="*res://src/CONSTS/Consts.gd"
+
 [input]
 
 left={
