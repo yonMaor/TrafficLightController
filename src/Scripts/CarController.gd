@@ -22,10 +22,10 @@ func calc_acceleration_dir() -> int:
 	# TODO: Decision needs to also be based on the change in the closest object dist
 	if body_in_front_scanner:
 		if velocity.length() < 1:
-			return Enums.ACCEL_DIR.STOP
-		return Enums.ACCEL_DIR.BACKWARD
+			return Enums.ACCEL_DIR_STATES.STOP
+		return Enums.ACCEL_DIR_STATES.BACKWARD
 	else:
-		return Enums.ACCEL_DIR.FORWARD
+		return Enums.ACCEL_DIR_STATES.FORWARD
 
 
 func get_collision_shape_shape(collision_shape):
