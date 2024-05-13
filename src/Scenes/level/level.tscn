@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cp532wpes3h6"]
+[gd_scene load_steps=6 format=3 uid="uid://cp532wpes3h6"]
 
 [ext_resource type="PackedScene" uid="uid://c3axxwhg6uvvf" path="res://src/Scenes/car/car.tscn" id="1_2w6up"]
 [ext_resource type="Texture2D" uid="uid://cst6hmd42lbsq" path="res://icon.svg" id="2_1p2kj"]
 [ext_resource type="Script" path="res://src/Scenes/level/CharacterBody2D2.gd" id="3_6wpic"]
+[ext_resource type="PackedScene" uid="uid://crmkmpsuyxhpp" path="res://src/Scenes/traffic_light/traffic_light.tscn" id="4_i1ie1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0prmf"]
 size = Vector2(131, 130)
@@ -31,3 +32,6 @@ texture = ExtResource("2_1p2kj")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D2"]
 position = Vector2(3, -1)
 shape = SubResource("RectangleShape2D_0prmf")
+
+[node name="TrafficLight" parent="." instance=ExtResource("4_i1ie1")]
+position = Vector2(955, 442)

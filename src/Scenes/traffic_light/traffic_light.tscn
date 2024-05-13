@@ -7,8 +7,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8m3js"]
 size = Vector2(40, 330)
 
-[node name="TrafficLight" type="Area2D"]
+[node name="TrafficLight" type="CharacterBody2D" groups=["TrafficLight"]]
 position = Vector2(510, 326)
+input_pickable = true
 script = ExtResource("1_spm68")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -24,5 +25,6 @@ texture = ExtResource("3_38qei")
 position = Vector2(-10, -7)
 shape = SubResource("RectangleShape2D_8m3js")
 
+[connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
