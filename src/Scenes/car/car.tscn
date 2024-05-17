@@ -3,29 +3,34 @@
 [ext_resource type="Script" path="res://src/Scripts/CarController.gd" id="1_hsswd"]
 [ext_resource type="Texture2D" uid="uid://0x15763pv3vh" path="res://Assets/Sprites/Image/Cars/red_car1.png" id="2_aexiu"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_jb54g"]
-size = Vector2(90, 176)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_phqsk"]
+size = Vector2(87.9994, 169)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yuxrw"]
 size = Vector2(100, 600)
 
 [node name="Car" type="CharacterBody2D" groups=["Car"]]
 position = Vector2(86, 340)
+scale = Vector2(1.2, 1.2)
 script = ExtResource("1_hsswd")
 
 [node name="CarSprite" type="Sprite2D" parent="."]
 rotation = 1.5708
 texture = ExtResource("2_aexiu")
 
-[node name="CarCollisionShape" type="CollisionShape2D" parent="."]
+[node name="CarShape" type="Area2D" parent="."]
 position = Vector2(-2.99878, -4.99951)
 rotation = 1.5708
-shape = SubResource("RectangleShape2D_jb54g")
+collision_layer = 2
+
+[node name="BodyCollisionShape" type="CollisionShape2D" parent="CarShape"]
+position = Vector2(0.999512, -1.49878)
+shape = SubResource("RectangleShape2D_phqsk")
 
 [node name="FrontScanner" type="Area2D" parent="."]
 position = Vector2(0.000244141, -1)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="FrontScanner"]
+[node name="BodyCollisionShape" type="CollisionShape2D" parent="FrontScanner"]
 position = Vector2(386, -4)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_yuxrw")

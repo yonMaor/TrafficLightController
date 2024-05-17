@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @onready var front_scanner = $FrontScanner
-@onready var car_collision_shape = $CarCollisionShape
+@onready var car_shape = $CarShape
 
 const SPEED: float = 40.0
 const MAX_SPEED: float = 100
@@ -15,16 +15,16 @@ var dist_to_min_target: float = 0
 func _ready():
 	pass # Replace with function body.
 
-#func calc_acceleration_dir() -> int:
-	## Returns 1 when accelerating, -1 when braking, and 0 when stopped
-	## TODO: Decision needs to also be based on the change in the closest object dist
-	#if bodies_in_range:
-		## TODO: Check why car isn't stopping completely at low speed
-		#if velocity.length() < 1:
-			#return Enums.ACCEL_DIR_STATES.STOP
-		#return Enums.ACCEL_DIR_STATES.BACKWARD
-	#else:
-		#return Enums.ACCEL_DIR_STATES.FORWARD
+func calc_acceleration_dir() -> int:
+	# Returns 1 when accelerating, -1 when braking, and 0 when stopped
+	# TODO: Decision needs to also be based on the change in the closest object dist
+	if bodies_in_range:
+		# TODO: Check why car isn't stopping completely at low speed
+		if velocity.length() < 1:
+			return Enums.ACCEL_DIR_STATES.STOP
+		return Enums.ACCEL_DIR_STATES.BACKWARD
+	else:
+		return Enums.ACCEL_DIR_STATES.FORWARD
 
 func get_collision_shape_shape(collision_shape):
 	return collision_shape.get_shape().size
@@ -38,7 +38,7 @@ func get_collision_shape_long_side(collision_shape) -> float:
 	return max(shape[0], shape[1])
 
 func get_front_scanner_length(front_scanner):
-	var front_scanner_collision_shape = front_scanner.get_node("CollisionShape2D")
+	var front_scanner_collision_shape = front_scanner.get_node(Consts.body_collision_shape_str)
 	return get_collision_shape_long_side(front_scanner_collision_shape)
 
 # TODO: Refactor this mess of a function
@@ -48,9 +48,9 @@ func get_closest_body_and_range() -> Dictionary:
 	var min_dist = get_front_scanner_length(front_scanner)
 	
 	for body in bodies_in_range:
-		var body_collision_shape = body.get_node("CollisionShape2D") #TODO: Should check if this returns anything
+		var body_collision_shape = body.get_node(Consts.body_collision_shape_str) #TODO: Every potential body needs to have a CollisionShape2D
 		var body_length = max(body_collision_shape.shape.size[0], body_collision_shape.shape.size[1])
-		var car_length = get_collision_shape_long_side(car_collision_shape)
+		var car_length = get_collision_shape_long_side(car_shape.get_node(Consts.body_collision_shape_str))
 		# TODO: Fix to consider angle between the bodies
 		var dist = (body.position - position).length() - body_length/2 - car_length/2
 		#print(dist)
@@ -75,7 +75,14 @@ func calc_acceleration():
 	var acceleration_ratio = calc_acceleration_ratio(min_dist_body)
 	return acceleration_ratio * ACCEL_BASE_FACTOR * acceleration_dir
 
+func update_bodies_in_front_scanner():
+	for body in bodies_in_range:
+		if body.is_in_group(GroupNames.TRAFFIC_LIGHT_GROUP):
+			if body.state != Enums.TRAFFIC_LIGHT_STATES.RED:
+				bodies_in_range.erase(body)
+
 func _process(delta) -> void:
+	update_bodies_in_front_scanner()
 	var acceleration = calc_acceleration()
 	velocity = Vector2(1, 0).rotated(rotation) * min (velocity.length() + acceleration, MAX_SPEED)
 	move_and_slide()

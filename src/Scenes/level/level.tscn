@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://cp532wpes3h6"]
+[gd_scene load_steps=7 format=3 uid="uid://cp532wpes3h6"]
 
 [ext_resource type="PackedScene" uid="uid://c3axxwhg6uvvf" path="res://src/Scenes/car/car.tscn" id="1_2w6up"]
+[ext_resource type="PackedScene" uid="uid://ynsaeairw8dd" path="res://src/Scenes/Map/map.tscn" id="1_gnnx1"]
 [ext_resource type="Texture2D" uid="uid://cst6hmd42lbsq" path="res://icon.svg" id="2_1p2kj"]
 [ext_resource type="Script" path="res://src/Scenes/level/CharacterBody2D2.gd" id="3_6wpic"]
 [ext_resource type="PackedScene" uid="uid://crmkmpsuyxhpp" path="res://src/Scenes/traffic_light/traffic_light.tscn" id="4_i1ie1"]
@@ -10,9 +11,14 @@ size = Vector2(131, 130)
 
 [node name="Level" type="Node2D"]
 
-[node name="CharacterBody2D" parent="." instance=ExtResource("1_2w6up")]
+[node name="Map" parent="." instance=ExtResource("1_gnnx1")]
+
+[node name="Car" parent="." instance=ExtResource("1_2w6up")]
+position = Vector2(1448, 601)
+rotation = 3.14159
 
 [node name="CharacterBody2D3" type="CharacterBody2D" parent="." groups=["Car"]]
+visible = false
 position = Vector2(599, -5)
 
 [node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D3"]
@@ -23,6 +29,7 @@ position = Vector2(3, -1)
 shape = SubResource("RectangleShape2D_0prmf")
 
 [node name="CharacterBody2D2" type="CharacterBody2D" parent="."]
+visible = false
 position = Vector2(431, -1)
 script = ExtResource("3_6wpic")
 
@@ -34,4 +41,5 @@ position = Vector2(3, -1)
 shape = SubResource("RectangleShape2D_0prmf")
 
 [node name="TrafficLight" parent="." instance=ExtResource("4_i1ie1")]
-position = Vector2(955, 442)
+position = Vector2(571, 521)
+rotation = 3.14159

@@ -9,6 +9,7 @@ size = Vector2(40, 330)
 
 [node name="TrafficLight" type="CharacterBody2D" groups=["TrafficLight"]]
 position = Vector2(510, 326)
+scale = Vector2(0.75, 0.75)
 input_pickable = true
 script = ExtResource("1_spm68")
 
@@ -21,7 +22,7 @@ texture = ExtResource("1_qyhbe")
 [node name="Outline" type="Sprite2D" parent="."]
 texture = ExtResource("3_38qei")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="BodyCollisionShape" type="CollisionShape2D" parent="."]
 position = Vector2(-10, -7)
 shape = SubResource("RectangleShape2D_8m3js")
 

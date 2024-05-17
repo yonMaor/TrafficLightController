@@ -20,6 +20,11 @@ GroupNames="*res://src/CONSTS/GroupNames.gd"
 Enums="*res://src/CONSTS/Enums.gd"
 Consts="*res://src/CONSTS/Consts.gd"
 
+[display]
+
+window/size/viewport_width=1170
+window/size/viewport_height=972
+
 [input]
 
 left={
