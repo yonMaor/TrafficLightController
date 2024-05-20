@@ -22,15 +22,8 @@ func update(distance: float, delta: float) -> float:
 	var error = distance - d_desired
 	var proportional = calc_proportional_term(error)
 	var derivative = calc_derivative_term(error, delta)
-	integral += calc_integral_term(error, delta)
-	#print("proportional: %10.3f" % proportional)
-	print("derivate: %10.3f" % derivative)
-	#print("integral: %10.3f" % integral)
-	#print("error: %10.3f" % error)
-	
-	
+	integral += calc_integral_term(error, delta)	
 	previous_error = error
-	
 	var output = proportional + derivative + integral
 	return output
 

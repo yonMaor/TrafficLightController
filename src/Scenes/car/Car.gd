@@ -3,6 +3,7 @@ extends CharacterBody2D
 @onready var front_scanner = $FrontScanner
 @onready var car_shape = $CarShape
 
+# TODO: Organize constants and erase or move to CarControlConsts.gd
 const SPEED: float = 40.0
 const MAX_SPEED: float = 100
 const INITIAL_DIR: Vector2 = Vector2(1, 0)
@@ -21,15 +22,17 @@ var error_integral: float = 0.0
 func _ready():
 	pid = PIDController.new(CarControlConsts.KP, CarControlConsts.KI, CarControlConsts.KD, min_dist_to_target)
 	
-
+# TODO: Create a utils file and move this function to it
 func get_collision_shape_shape(collision_shape):
 	return collision_shape.get_shape().size
 
+# TODO: Create a utils file and move this function to it
 func get_collision_shape_short_side(collision_shape: CollisionShape2D) -> float:
 	var shape = get_collision_shape_shape(collision_shape)
 	print(shape)
 	return min(shape[0], shape[1])
 
+# TODO: Create a utils file and move this function to it
 func get_collision_shape_long_side(collision_shape) -> float:
 	var shape = get_collision_shape_shape(collision_shape)
 	return max(shape[0], shape[1])
@@ -85,11 +88,10 @@ func resize_front_scanner(velocity: Vector2) -> void:
 	var front_scanner_collision_shape_length = base_search_length + velocity_factor * velocity.length()
 	front_scanner_collision_shape.shape.set_size(Vector2(front_scanner_collision_shape_width, front_scanner_collision_shape_length))
 	var car_shape_collision_shape = car_shape.get_node(StringConsts.body_collision_shape_str)
-	#print(Vector2(get_collision_shape_long_side(car_shape_collision_shape) * 1.5, 0))
 	var front_scanner_position = Vector2(get_collision_shape_long_side(car_shape_collision_shape) / 2 + front_scanner_collision_shape_length / 2, -5)
 	front_scanner_collision_shape.position = front_scanner_position
-	# TODO: Need to adjust location of the front scanner when resizing
-	
+
+# TODO: Move acceleration logic from here to a separate function
 func _process(delta):
 	resize_front_scanner(velocity)
 	var closest_body = get_closest_body_and_range()
