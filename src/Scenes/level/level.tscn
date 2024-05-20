@@ -41,5 +41,5 @@ position = Vector2(3, -1)
 shape = SubResource("RectangleShape2D_0prmf")
 
 [node name="TrafficLight" parent="." instance=ExtResource("4_i1ie1")]
-position = Vector2(571, 521)
+position = Vector2(585, 518)
 rotation = 3.14159

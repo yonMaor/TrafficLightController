@@ -18,7 +18,8 @@ config/icon="res://icon.svg"
 
 GroupNames="*res://src/CONSTS/GroupNames.gd"
 Enums="*res://src/CONSTS/Enums.gd"
-Consts="*res://src/CONSTS/Consts.gd"
+StringConsts="*res://src/CONSTS/StringConsts.gd"
+CarControlConsts="*res://src/CONSTS/CarControlConsts.gd"
 
 [display]
 
