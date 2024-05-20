@@ -13,9 +13,9 @@ var integral_saturation: float = 10 # TODO: See if this is needed
 
 func _init(Kp: float, Ki: float, Kd: float, d_desired: float) -> void:
 	# TODO: Move these back to the consts file
-	self.Kp = 0.5
-	self.Ki = 0.015
-	self.Kd = 0.75
+	self.Kp = Kp
+	self.Ki = Ki
+	self.Kd = Kd
 	self.d_desired = d_desired
 	
 func update(distance: float, delta: float) -> float:

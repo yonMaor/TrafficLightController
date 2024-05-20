@@ -1,8 +1,13 @@
 extends Node
 
-const KP: float = 1.0 # Proportional gain
-const KI: float = 0.3 # Integral gain
-const KD: float = 1.0 # Derivative gain
+const KP: float = 0.5 # Proportional gain
+const KI: float = 0.1 # Integral gain
+const KD: float = 0.85 # Derivative gain
+
+# Best working PID consts currently
+#self.Kp = 0.5
+#self.Ki = 0.015
+#self.Kd = 0.75
 
 const MAX_SPEED = 100
 const MIN_SAFETY_DIST = 1.0
