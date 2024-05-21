@@ -23,8 +23,8 @@ CarControlConsts="*res://src/CONSTS/CarControlConsts.gd"
 
 [display]
 
-window/size/viewport_width=1170
-window/size/viewport_height=972
+window/size/viewport_width=1100
+window/size/viewport_height=1100
 
 [input]
 
