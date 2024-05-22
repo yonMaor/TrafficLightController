@@ -15,3 +15,9 @@ const MAX_BRAKING_FORCE = 0.01
 const MAX_ACCELERATION = 1.0
 
 const TARGET_DIST: float = 1.0
+
+const SPEED: float = 40.0
+const INITIAL_DIR: Vector2 = Vector2(1, 0)
+#const ACCEL_BASE_FACTOR: float = 0.25
+const base_acceleration: float = 0.5
+const min_dist_to_target: float = 50.0
