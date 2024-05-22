@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://c3axxwhg6uvvf"]
+[gd_scene load_steps=7 format=3 uid="uid://c3axxwhg6uvvf"]
 
 [ext_resource type="Script" path="res://src/Scenes/car/Car.gd" id="1_5spib"]
 [ext_resource type="Texture2D" uid="uid://0x15763pv3vh" path="res://Assets/Sprites/Image/Cars/red_car1.png" id="2_aexiu"]
 [ext_resource type="Script" path="res://src/Scenes/car/PIDController.gd" id="3_4a3au"]
+[ext_resource type="Script" path="res://src/Scenes/car/FrontScanner.gd" id="3_c8ouv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_phqsk"]
 size = Vector2(86.6667, 169)
@@ -29,6 +30,7 @@ position = Vector2(-0.833331, -1.66667)
 shape = SubResource("RectangleShape2D_phqsk")
 
 [node name="FrontScanner" type="Area2D" parent="."]
+script = ExtResource("3_c8ouv")
 
 [node name="BodyCollisionShape" type="CollisionShape2D" parent="FrontScanner"]
 position = Vector2(271.667, -4.16666)
@@ -40,5 +42,5 @@ one_way_collision_margin = 0.0
 position = Vector2(0, -0.833333)
 script = ExtResource("3_4a3au")
 
-[connection signal="body_entered" from="FrontScanner" to="." method="_on_front_scanner_body_entered"]
-[connection signal="body_exited" from="FrontScanner" to="." method="_on_front_scanner_body_exited"]
+[connection signal="body_entered" from="FrontScanner" to="FrontScanner" method="_on_body_entered"]
+[connection signal="body_exited" from="FrontScanner" to="FrontScanner" method="_on_body_exited"]
