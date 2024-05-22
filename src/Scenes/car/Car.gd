@@ -21,25 +21,10 @@ var error_integral: float = 0.0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pid = PIDController.new(CarControlConsts.KP, CarControlConsts.KI, CarControlConsts.KD, min_dist_to_target)
-	
-# TODO: Create a utils file and move this function to it
-func get_collision_shape_shape(collision_shape):
-	return collision_shape.get_shape().size
-
-# TODO: Create a utils file and move this function to it
-func get_collision_shape_short_side(collision_shape: CollisionShape2D) -> float:
-	var shape = get_collision_shape_shape(collision_shape)
-	print(shape)
-	return min(shape[0], shape[1])
-
-# TODO: Create a utils file and move this function to it
-func get_collision_shape_long_side(collision_shape) -> float:
-	var shape = get_collision_shape_shape(collision_shape)
-	return max(shape[0], shape[1])
 
 func get_front_scanner_length():
 	var front_scanner_collision_shape = front_scanner.get_node(StringConsts.body_collision_shape_str)
-	return get_collision_shape_long_side(front_scanner_collision_shape)
+	return Utils.get_collision_shape_long_side(front_scanner_collision_shape)
 
 # TODO: Refactor this mess of a function
 # TODO: Consider moving this to the front scanner node
@@ -50,7 +35,7 @@ func get_closest_body_and_range() -> Dictionary:
 	for body in bodies_in_range:
 		var body_collision_shape = body.get_node(StringConsts.body_collision_shape_str) #TODO: Every potential body needs to have a CollisionShape2D
 		var body_length = max(body_collision_shape.shape.size[0], body_collision_shape.shape.size[1])
-		var car_length = get_collision_shape_long_side(car_shape.get_node(StringConsts.body_collision_shape_str))
+		var car_length = Utils.get_collision_shape_long_side(car_shape.get_node(StringConsts.body_collision_shape_str))
 		# TODO: Fix to consider angle between the bodies
 		var dist = (body.position - position).length() - body_length/2 - car_length/2
 		#print(dist)
@@ -84,11 +69,11 @@ func resize_front_scanner(velocity: Vector2) -> void:
 	var base_search_length = 200 # TODO: Move this to consts file
 	var velocity_factor = 1.0 # TODO: Move this to consts file
 	var front_scanner_collision_shape = front_scanner.get_node(StringConsts.body_collision_shape_str)
-	var front_scanner_collision_shape_width = get_collision_shape_short_side(front_scanner_collision_shape)
+	var front_scanner_collision_shape_width = Utils.get_collision_shape_short_side(front_scanner_collision_shape)
 	var front_scanner_collision_shape_length = base_search_length + velocity_factor * velocity.length()
 	front_scanner_collision_shape.shape.set_size(Vector2(front_scanner_collision_shape_width, front_scanner_collision_shape_length))
 	var car_shape_collision_shape = car_shape.get_node(StringConsts.body_collision_shape_str)
-	var front_scanner_position = Vector2(get_collision_shape_long_side(car_shape_collision_shape) / 2 + front_scanner_collision_shape_length / 2, -5)
+	var front_scanner_position = Vector2(Utils.get_collision_shape_long_side(car_shape_collision_shape) / 2 + front_scanner_collision_shape_length / 2, -5)
 	front_scanner_collision_shape.position = front_scanner_position
 
 # TODO: Move acceleration logic from here to a separate function

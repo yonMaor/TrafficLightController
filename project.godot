@@ -20,6 +20,7 @@ GroupNames="*res://src/CONSTS/GroupNames.gd"
 Enums="*res://src/CONSTS/Enums.gd"
 StringConsts="*res://src/CONSTS/StringConsts.gd"
 CarControlConsts="*res://src/CONSTS/CarControlConsts.gd"
+Utils="*res://src/Utils/Utils.gd"
 
 [display]
 
