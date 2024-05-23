@@ -10,6 +10,7 @@ const YELLOW = preload("res://Assets/Sprites/Image/TrafficLight/YELLOW.png")
 var state: Enums.TRAFFIC_LIGHT_STATES
 
 var traffic_light_highlighted: bool = false
+var is_blocking_traffic: bool = false
 
 func set_color_state(color_state: Enums.TRAFFIC_LIGHT_STATES) -> void:
 	state = color_state
@@ -31,9 +32,13 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
-	#if  and traffic_light_highlighted:
-		#print("YAY")
+	check_is_blocking_traffic()
+
+func check_is_blocking_traffic():
+	if state == Enums.TRAFFIC_LIGHT_STATES.RED:
+		is_blocking_traffic = true
+	else:
+		is_blocking_traffic = false
 
 func _on_mouse_entered():
 	outline.visible = true

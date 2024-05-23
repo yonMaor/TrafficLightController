@@ -15,11 +15,11 @@ func get_front_scanner_length():
 	var front_scanner_collision_shape = get_node(StringConsts.body_collision_shape_str)
 	return Utils.get_collision_shape_long_side(front_scanner_collision_shape)
 
-func update_bodies_in_front_scanner():
-	for body in bodies_in_range:
-		if body.is_in_group(GroupNames.TRAFFIC_LIGHT_GROUP):
-			if body.state != Enums.TRAFFIC_LIGHT_STATES.RED:
-				bodies_in_range.erase(body)
+#func update_bodies_in_front_scanner():
+	#for body in bodies_in_range:
+		#if body.is_in_group(GroupNames.TRAFFIC_LIGHT_GROUP):
+			#if body.state != Enums.TRAFFIC_LIGHT_STATES.RED:
+				#bodies_in_range.erase(body)
 
 # TODO: Refactor this mess of a function
 func get_closest_body_and_range(car_shape, car_position) -> Dictionary:
@@ -27,6 +27,8 @@ func get_closest_body_and_range(car_shape, car_position) -> Dictionary:
 	var min_dist = get_front_scanner_length()
 	
 	for body in bodies_in_range:
+		if not body.is_blocking_traffic:
+			continue
 		var body_collision_shape = body.get_node(StringConsts.body_collision_shape_str) #TODO: Every potential body needs to have a CollisionShape2D
 		var body_length = max(body_collision_shape.shape.size[0], body_collision_shape.shape.size[1])
 		var car_length = Utils.get_collision_shape_long_side(car_shape.get_node(StringConsts.body_collision_shape_str))
@@ -52,7 +54,6 @@ func resize_front_scanner(car_velocity: Vector2, car_shape) -> void:
 	front_scanner_collision_shape.position = front_scanner_position
 
 func set_body_in_front_scanner(body):
-	print("HA")
 	bodies_in_range.append(body)
 
 func _on_body_entered(body):
