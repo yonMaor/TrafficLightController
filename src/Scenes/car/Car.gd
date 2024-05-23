@@ -6,6 +6,7 @@ extends CharacterBody2D
 # TODO: Organize constants and erase or move to CarControlConsts.gd
 var pid: PIDController
 
+var is_blocking_traffic: bool = true
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pid = PIDController.new(CarControlConsts.KP, CarControlConsts.KI, CarControlConsts.KD, CarControlConsts.min_dist_to_target)
