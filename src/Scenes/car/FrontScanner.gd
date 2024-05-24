@@ -61,8 +61,7 @@ func _on_body_entered(body):
 		set_body_in_front_scanner(body)
 		return
 	if body.is_in_group(GroupNames.TRAFFIC_LIGHT_GROUP):
-		if body.state == Enums.TRAFFIC_LIGHT_STATES.RED:
-			set_body_in_front_scanner(body)
+		set_body_in_front_scanner(body)
 
 func _on_body_exited(body):
 	var body_idx = bodies_in_range.find(body)
