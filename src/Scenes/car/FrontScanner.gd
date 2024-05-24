@@ -16,6 +16,14 @@ func get_front_scanner_length():
 	var front_scanner_collision_shape = get_node(StringConsts.body_collision_shape_str)
 	return Utils.get_collision_shape_long_side(front_scanner_collision_shape)
 
+func get_dist_to_body(body, car_shape, car_position) -> float:
+	var body_collision_shape = body.get_node(StringConsts.body_collision_shape_str) #TODO: Every potential body needs to have a CollisionShape2D
+	var body_length = max(body_collision_shape.shape.size[0], body_collision_shape.shape.size[1])
+	var car_length = Utils.get_collision_shape_long_side(car_shape.get_node(StringConsts.body_collision_shape_str))
+	# TODO: Fix to consider angle between the bodies
+	var dist = (body.position - car_position).length() - body_length/2 - car_length/2
+	return dist
+
 # TODO: Refactor this mess of a function
 func get_closest_body_and_range(car_shape, car_position) -> Dictionary:
 	var min_dist_body = null
@@ -24,11 +32,7 @@ func get_closest_body_and_range(car_shape, car_position) -> Dictionary:
 	for body in bodies_in_range:
 		if not body.is_blocking_traffic:
 			continue
-		var body_collision_shape = body.get_node(StringConsts.body_collision_shape_str) #TODO: Every potential body needs to have a CollisionShape2D
-		var body_length = max(body_collision_shape.shape.size[0], body_collision_shape.shape.size[1])
-		var car_length = Utils.get_collision_shape_long_side(car_shape.get_node(StringConsts.body_collision_shape_str))
-		# TODO: Fix to consider angle between the bodies
-		var dist = (body.position - car_position).length() - body_length/2 - car_length/2
+		var dist = get_dist_to_body(body, car_shape, car_position)
 		if dist < min_dist:
 			min_dist = dist
 			min_dist_body = body
