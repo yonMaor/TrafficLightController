@@ -1,5 +1,7 @@
 extends Area2D
 
+@onready var collision_shape = $BodyCollisionShape
+
 var bodies_in_range: Array = []
 
 # Called when the node enters the scene tree for the first time.
@@ -8,7 +10,6 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	# TOOD: Move front scanner resizing here from the car's _process function
 	pass
 
 func get_front_scanner_length():
@@ -34,15 +35,19 @@ func get_closest_body_and_range(car_shape, car_position) -> Dictionary:
 
 	return {StringConsts.MIN_DIST: min_dist, StringConsts.MIN_DIST_BODY: min_dist_body}
 
-# TODO: Break this ugly function up to pieces
-func resize_front_scanner(car_velocity: Vector2, car_shape) -> void:
-	var front_scanner_collision_shape = get_node(StringConsts.body_collision_shape_str)
-	var front_scanner_collision_shape_width = Utils.get_collision_shape_short_side(front_scanner_collision_shape)
-	var front_scanner_collision_shape_length = FrontScannerConsts.base_search_length + FrontScannerConsts.velocity_factor * car_velocity.length()
-	front_scanner_collision_shape.shape.set_size(Vector2(front_scanner_collision_shape_width, front_scanner_collision_shape_length))
+func update_front_scanner_shape(car_velocity: Vector2) -> void:
+	var front_scanner_width = Utils.get_collision_shape_short_side(collision_shape)
+	var front_scanner_length = FrontScannerConsts.base_search_length + FrontScannerConsts.velocity_factor * car_velocity.length()
+	collision_shape.shape.set_size(Vector2(front_scanner_width, front_scanner_length))
+
+func update_front_scanner_position(car_shape):
 	var car_shape_collision_shape = car_shape.get_node(StringConsts.body_collision_shape_str)
-	var front_scanner_position = Vector2(Utils.get_collision_shape_long_side(car_shape_collision_shape) / 2 + front_scanner_collision_shape_length / 2, -5)
-	front_scanner_collision_shape.position = front_scanner_position
+	var front_scanner_position = Vector2(Utils.get_collision_shape_long_side(car_shape_collision_shape) / 2 + get_front_scanner_length() / 2, -5)
+	collision_shape.position = front_scanner_position
+
+func update_front_scanner(car_velocity: Vector2, car_shape) -> void:
+	update_front_scanner_shape(car_velocity)
+	update_front_scanner_position(car_shape)
 
 func set_body_in_front_scanner(body):
 	bodies_in_range.append(body)
