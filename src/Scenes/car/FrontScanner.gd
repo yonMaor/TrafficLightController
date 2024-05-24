@@ -6,20 +6,14 @@ var bodies_in_range: Array = []
 func _ready():
 	pass # Replace with function body.
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	# TOOD: Move front scanner resizing here from the car's _process function
 	pass
 
 func get_front_scanner_length():
 	var front_scanner_collision_shape = get_node(StringConsts.body_collision_shape_str)
 	return Utils.get_collision_shape_long_side(front_scanner_collision_shape)
-
-#func update_bodies_in_front_scanner():
-	#for body in bodies_in_range:
-		#if body.is_in_group(GroupNames.TRAFFIC_LIGHT_GROUP):
-			#if body.state != Enums.TRAFFIC_LIGHT_STATES.RED:
-				#bodies_in_range.erase(body)
 
 # TODO: Refactor this mess of a function
 func get_closest_body_and_range(car_shape, car_position) -> Dictionary:
@@ -34,7 +28,6 @@ func get_closest_body_and_range(car_shape, car_position) -> Dictionary:
 		var car_length = Utils.get_collision_shape_long_side(car_shape.get_node(StringConsts.body_collision_shape_str))
 		# TODO: Fix to consider angle between the bodies
 		var dist = (body.position - car_position).length() - body_length/2 - car_length/2
-		#print(dist)
 		if dist < min_dist:
 			min_dist = dist
 			min_dist_body = body
@@ -43,11 +36,9 @@ func get_closest_body_and_range(car_shape, car_position) -> Dictionary:
 
 # TODO: Break this ugly function up to pieces
 func resize_front_scanner(car_velocity: Vector2, car_shape) -> void:
-	var base_search_length = 200 # TODO: Move this to consts file
-	var velocity_factor = 1.0 # TODO: Move this to consts file
 	var front_scanner_collision_shape = get_node(StringConsts.body_collision_shape_str)
 	var front_scanner_collision_shape_width = Utils.get_collision_shape_short_side(front_scanner_collision_shape)
-	var front_scanner_collision_shape_length = base_search_length + velocity_factor * car_velocity.length()
+	var front_scanner_collision_shape_length = FrontScannerConsts.base_search_length + FrontScannerConsts.velocity_factor * car_velocity.length()
 	front_scanner_collision_shape.shape.set_size(Vector2(front_scanner_collision_shape_width, front_scanner_collision_shape_length))
 	var car_shape_collision_shape = car_shape.get_node(StringConsts.body_collision_shape_str)
 	var front_scanner_position = Vector2(Utils.get_collision_shape_long_side(car_shape_collision_shape) / 2 + front_scanner_collision_shape_length / 2, -5)
