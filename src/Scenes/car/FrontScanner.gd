@@ -13,8 +13,8 @@ func _process(delta):
 	pass
 
 func get_front_scanner_length():
-	var front_scanner_collision_shape = get_node(StringConsts.body_collision_shape_str)
-	return Utils.get_collision_shape_long_side(front_scanner_collision_shape)
+	#var front_scanner_collision_shape = get_node(StringConsts.body_collision_shape_str)
+	return Utils.get_collision_shape_long_side(collision_shape)
 
 func get_dist_to_body(body, car_shape, car_position) -> float:
 	var body_collision_shape = body.get_node(StringConsts.body_collision_shape_str) #TODO: Every potential body needs to have a CollisionShape2D

@@ -9,7 +9,7 @@ size = Vector2(40, 330)
 
 [node name="TrafficLight" type="CharacterBody2D" groups=["TrafficLight"]]
 position = Vector2(510, 326)
-scale = Vector2(0.75, 0.75)
+scale = Vector2(0.5, 0.5)
 input_pickable = true
 script = ExtResource("1_spm68")
 

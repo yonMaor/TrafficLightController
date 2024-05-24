@@ -15,7 +15,7 @@ position = Vector2(-51, 64)
 [node name="Map" parent="." instance=ExtResource("1_gnnx1")]
 
 [node name="Car" parent="." instance=ExtResource("1_2w6up")]
-position = Vector2(1426, 523)
+position = Vector2(1396, 509)
 rotation = 3.14159
 
 [node name="CharacterBody2D3" type="CharacterBody2D" parent="." groups=["Car"]]
@@ -42,5 +42,5 @@ position = Vector2(3, -1)
 shape = SubResource("RectangleShape2D_0prmf")
 
 [node name="TrafficLight" parent="." instance=ExtResource("4_i1ie1")]
-position = Vector2(775, 400)
+position = Vector2(628, 440)
 rotation = 3.14159
