@@ -44,7 +44,7 @@ one_way_collision_margin = 0.0
 position = Vector2(0, -0.833333)
 script = ExtResource("3_4a3au")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
+[node name="RichTextLabel" type="Label" parent="."]
 offset_left = -25.8824
 offset_top = 40.0
 offset_right = 14.1176
