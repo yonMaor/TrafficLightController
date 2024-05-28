@@ -56,6 +56,7 @@ wait_time = 0.1
 autostart = true
 
 [node name="RichTextLabel" type="Label" parent="Control"]
+layout_mode = 0
 offset_left = -25.8824
 offset_top = 40.0
 offset_right = 14.1176
@@ -69,6 +70,7 @@ offset_right = 26.3529
 offset_bottom = 70.5294
 rotation = 1.5708
 scale = Vector2(2, 2)
+max_value = 40.0
 step = 1.0
 fill_mode = 3
 show_percentage = false
