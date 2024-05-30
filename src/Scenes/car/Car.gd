@@ -33,9 +33,8 @@ func apply_acceleration(acceleration: float, delta: float) -> void:
 		velocity = prev_velocity
 
 # TODO: Move acceleration logic from here to a separate function
-func _process(delta):
-	pass
-	#front_scanner.update_front_scanner(velocity, car_shape)
-	#var acceleration = calculate_acceleration(delta)
-	#apply_acceleration(acceleration, delta)
-	#move_and_slide()
+func _process(delta):	
+	front_scanner.update_front_scanner(velocity, car_shape)
+	var acceleration = calculate_acceleration(delta)
+	apply_acceleration(acceleration, delta)
+	move_and_slide()

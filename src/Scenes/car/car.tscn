@@ -64,14 +64,13 @@ offset_bottom = 80.0
 
 [node name="ProgressBar" type="ProgressBar" parent="Control"]
 layout_mode = 0
-offset_left = 22.3529
-offset_top = 43.5294
-offset_right = 26.3529
-offset_bottom = 70.5294
+offset_left = 71.7647
+offset_top = 44.7059
+offset_right = 86.7647
+offset_bottom = 124.706
 rotation = 1.5708
 scale = Vector2(2, 2)
 max_value = 40.0
-step = 1.0
 fill_mode = 3
 show_percentage = false
 

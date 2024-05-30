@@ -23,6 +23,7 @@ CarControlConsts="*res://src/CONSTS/CarControlConsts.gd"
 Utils="*res://src/Utils/Utils.gd"
 FrontScannerConsts="*res://src/CONSTS/FrontScannerConsts.gd"
 TimerConsts="*res://src/CONSTS/TimerConsts.gd"
+DriverPatienceConsts="*res://src/CONSTS/DriverPatienceConsts.gd"
 
 [display]
 
