@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://c3axxwhg6uvvf"]
+[gd_scene load_steps=8 format=3 uid="uid://c3axxwhg6uvvf"]
 
 [ext_resource type="Script" path="res://src/Scenes/car/Car.gd" id="1_5spib"]
 [ext_resource type="Texture2D" uid="uid://0x15763pv3vh" path="res://Assets/Sprites/Image/Cars/red_car1.png" id="2_aexiu"]
 [ext_resource type="Script" path="res://src/Scenes/car/PIDController.gd" id="3_4a3au"]
 [ext_resource type="Script" path="res://src/Scenes/car/FrontScanner.gd" id="3_c8ouv"]
+[ext_resource type="Script" path="res://src/Scenes/car/DriverPatience.gd" id="5_nwana"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_phqsk"]
 size = Vector2(86.6667, 169)
@@ -43,5 +44,36 @@ one_way_collision_margin = 0.0
 position = Vector2(0, -0.833333)
 script = ExtResource("3_4a3au")
 
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("5_nwana")
+
+[node name="Timer" type="Timer" parent="Control"]
+wait_time = 0.1
+autostart = true
+
+[node name="RichTextLabel" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = -25.8824
+offset_top = 40.0
+offset_right = 14.1176
+offset_bottom = 80.0
+
+[node name="ProgressBar" type="ProgressBar" parent="Control"]
+layout_mode = 0
+offset_left = 71.7647
+offset_top = 44.7059
+offset_right = 86.7647
+offset_bottom = 124.706
+rotation = 1.5708
+scale = Vector2(2, 2)
+max_value = 40.0
+fill_mode = 3
+show_percentage = false
+
 [connection signal="body_entered" from="FrontScanner" to="FrontScanner" method="_on_body_entered"]
 [connection signal="body_exited" from="FrontScanner" to="FrontScanner" method="_on_body_exited"]
+[connection signal="timeout" from="Control/Timer" to="Control" method="_on_timer_timeout"]
