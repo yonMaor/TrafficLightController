@@ -13,13 +13,15 @@ var traffic_light_highlighted: bool = false
 var is_blocking_traffic: bool = false
 
 func set_color_state(color_state: Enums.TRAFFIC_LIGHT_STATES) -> void:
+	var state_to_texture_color = {Enums.TRAFFIC_LIGHT_STATES.RED: RED, Enums.TRAFFIC_LIGHT_STATES.YELLOW: YELLOW, Enums.TRAFFIC_LIGHT_STATES.GREEN: GREEN}
 	state = color_state
-	if state == Enums.TRAFFIC_LIGHT_STATES.RED:
-		light.texture = RED
-	if state == Enums.TRAFFIC_LIGHT_STATES.YELLOW:
-		light.texture = YELLOW
-	if state ==Enums.TRAFFIC_LIGHT_STATES.GREEN:
-		light.texture = GREEN
+	light.texture = state_to_texture_color[state]
+	#if state == Enums.TRAFFIC_LIGHT_STATES.RED:
+		#light.texture = RED
+	#if state == Enums.TRAFFIC_LIGHT_STATES.YELLOW:
+		#light.texture = YELLOW
+	#if state ==Enums.TRAFFIC_LIGHT_STATES.GREEN:
+		#light.texture = GREEN
 	
 	light.position = Vector2(-35, -130)
 
