@@ -2,4 +2,3 @@ extends Node
 
 const MEDIUM_PATIENCE_TIMER_SEC = 20
 const HIGH_PATIENCE_TIMER_SEC = 40
-

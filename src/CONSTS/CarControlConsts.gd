@@ -1,8 +1,8 @@
 extends Node
 
-const KP: float = 1.2 # Proportional gain
-const KI: float = 0.8 # Integral gain
-const KD: float = 4.0 # Derivative gain
+const KP: float = 0.7 # Proportional gain
+const KI: float = 0.005 # Integral gain
+const KD: float = 0.03 # Derivative gain
 
 # Best working PID consts currently
 #self.Kp = 0.5
@@ -20,4 +20,4 @@ const TARGET_DIST: float = 1.0
 const INITIAL_DIR: Vector2 = Vector2(1, 0)
 #const ACCEL_BASE_FACTOR: float = 0.25
 const base_acceleration: float = 0.5
-const min_dist_to_target: float = 0.0
+const min_dist_to_target: float = 50.0

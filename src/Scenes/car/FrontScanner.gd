@@ -21,7 +21,8 @@ func get_dist_to_body(body, car_shape, car_position) -> float:
 	var body_length = max(body_collision_shape.shape.size[0], body_collision_shape.shape.size[1])
 	var car_length = Utils.get_collision_shape_long_side(car_shape.get_node(StringConsts.body_collision_shape_str))
 	# TODO: Fix to consider angle between the bodies
-	var dist = (body.position - car_position).length() - body_length/2 - car_length/2
+	var body_position = body.position
+	var dist = (body.position - car_position).length() - (body_length - car_length) / 2
 	return dist
 
 # TODO: Refactor this mess of a function
@@ -40,9 +41,10 @@ func get_closest_body_and_range(car_shape, car_position) -> Dictionary:
 	return {StringConsts.MIN_DIST: min_dist, StringConsts.MIN_DIST_BODY: min_dist_body}
 
 func update_front_scanner_shape(car_velocity: Vector2) -> void:
-	var front_scanner_width = Utils.get_collision_shape_short_side(collision_shape)
-	var front_scanner_length = FrontScannerConsts.base_search_length + FrontScannerConsts.velocity_factor * car_velocity.length()
-	collision_shape.shape.set_size(Vector2(front_scanner_width, front_scanner_length))
+	pass
+	#var front_scanner_width = Utils.get_collision_shape_short_side(collision_shape)
+	#var front_scanner_length = FrontScannerConsts.base_search_length + FrontScannerConsts.velocity_factor * car_velocity.length()
+	#collision_shape.shape.set_size(Vector2(front_scanner_width, front_scanner_length))
 
 func update_front_scanner_position(car_shape):
 	var car_shape_collision_shape = car_shape.get_node(StringConsts.body_collision_shape_str)
